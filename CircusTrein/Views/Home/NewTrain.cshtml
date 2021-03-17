@@ -20,6 +20,7 @@
                 <div class="form-group">
                     <label asp-for="Diet" class="control-label"></label>
                     <select asp-for="Diet" class="form-control">
+                        <option value="@null">Select a Diet</option>
                         <option value="0">Herbivore</option>
                         <option value="1">Carnivore</option>
                     </select>
@@ -28,6 +29,7 @@
                 <div class="form-group">
                     <label asp-for="Size" class="control-label"></label>
                     <select asp-for="Size" class="form-control">
+                        <option value="@null">Select a Size</option>
                         <option value="1">Small</option>
                         <option value="3">Medium</option>
                         <option value="5">Large</option>
@@ -41,63 +43,70 @@
             </form>
         </div>
         <div>
-            <h1>Animals to be transported</h1>
-            <table>
-                <tr style="border-bottom:1px solid black">
-                    <th>Name</th>
-                    <th>Size</th>
-                    <th>Diet</th>
-                </tr>
-
-                @foreach (var animal in Storage.AnimalStorage.GetAnimalList())
-                {
+            <h1 style="border-bottom:1px solid rgb(67 67 67 / 0.28);">Animals to be transported</h1>
+            @if (Storage.AnimalStorage.GetAnimalList().Count() == 0)
+            {
+                <h2>No Animals Added yet</h2>
+            }
+            else
+            {
+                <table>
                     <tr style="border-bottom:1px solid black">
-                        <td style="padding:10px">@animal.Name</td>
-                        @if (animal.Size == 1)
-                        {
-                            <td style="padding:10px">
-                                Small
-                            </td>
-                        }
-                        else
-                        {
-                            if (animal.Size == 3)
-                            {
-                                <td style="padding:10px">
-                                    Medium
-                                </td>
-                            }
-                            if (animal.Size == 5)
-                            {
-                                <td style="padding:10px">
-                                    Large
-                                </td>
-                            }
-                        }
-
-                        @if (animal.Diet == 0)
-                        {
-                            <td style="padding:10px">
-                                Herbivore
-                            </td>
-                        }
-                        else
-                        {
-                            <td style="padding:10px">
-                                Carnivore
-                            </td>
-                        }
-                        <td>
-                            <input style="transform:scale(0.8);" class="btn btn-primary" type="button" value="Remove" onclick="location.href='@Url.Action("RemoveAnimalFromList", new { animalId = @animal.AnimalId})'" />
-                        </td>
+                        <th>Name</th>
+                        <th>Size</th>
+                        <th>Diet</th>
                     </tr>
 
-                }
-            </table>
-            <div>
-                <input class="btn btn-primary mt-3" type="button" value="Generate Train" onclick="location.href='@Url.Action("GenerateTrain")'" />
+                    @foreach (var animal in Storage.AnimalStorage.GetAnimalList())
+                    {
+                        <tr style="border-bottom:1px solid black">
+                            <td style="padding:10px">@animal.Name</td>
+                            @if (animal.Size == 1)
+                            {
+                                <td style="padding:10px">
+                                    Small
+                                </td>
+                            }
+                            else
+                            {
+                                if (animal.Size == 3)
+                                {
+                                    <td style="padding:10px">
+                                        Medium
+                                    </td>
+                                }
+                                if (animal.Size == 5)
+                                {
+                                    <td style="padding:10px">
+                                        Large
+                                    </td>
+                                }
+                            }
 
-            </div>
+                            @if (animal.Diet == 0)
+                            {
+                                <td style="padding:10px">
+                                    Herbivore
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="padding:10px">
+                                    Carnivore
+                                </td>
+                            }
+                            <td>
+                                <input style="transform:scale(0.8);" class="btn btn-primary" type="button" value="Remove" onclick="location.href='@Url.Action("RemoveAnimalFromList", new { animalId = @animal.AnimalId})'" />
+                            </td>
+                        </tr>
+
+                    }
+                </table>
+                <div>
+                    <input class="btn btn-primary mt-3" type="button" value="Generate Train" onclick="location.href='@Url.Action("GenerateTrain")'" />
+
+                </div>
+            }
         </div>
     </div>
 </div>
