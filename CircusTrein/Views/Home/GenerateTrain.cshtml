@@ -1,0 +1,80 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using Logic;
+@{int wagonNumber = 0;}
+
+<div style="width:350px;">
+    @foreach (var wagon in Storage.WagonStorage.GetWagons())
+    {
+    <div class="mt-5" style="border-radius:10px; background-color:rgb(118 146 255 / 0.35);">
+        @if (wagon.Used)
+        {
+        <div style="padding:5px;">
+            <h3 style="color:green">Wagon @wagonNumber</h3>
+            <h5>Remaining space: @wagon.FreeSpots</h5>
+
+            <h5 class="mt-3" style="border-bottom:3px solid black; width:250px;">@wagon.Animals.Count() Animal(s) in this Wagon:</h5>
+
+            <table class="mt-3" style="border-bottom:1px solid black">
+                <tr style="border-bottom:1px solid black">
+                    <th>Name</th>
+                    <th>Size</th>
+                    <th>Diet</th>
+                </tr>
+
+                @foreach (var animal in wagon.Animals)
+                {
+                    <tr>
+                        <td style="padding:10px">@animal.Name</td>
+                        @if (animal.Size == 1)
+                        {
+                            <td style="padding:10px">
+                                Small
+                            </td>
+                        }
+                        else
+                        {
+                            if (animal.Size == 3)
+                            {
+                                <td style="padding:10px">
+                                    Medium
+                                </td>
+                            }
+                            if (animal.Size == 5)
+                            {
+                                <td style="padding:10px">
+                                    Large
+                                </td>
+                            }
+                        }
+
+                        @if (animal.Diet == 0)
+                        {
+                            <td style="padding:10px">
+                                Herbivore
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="padding:10px">
+                                Carnivore
+                            </td>
+                        }
+
+                    </tr>
+
+                }
+            </table>
+        </div>
+        wagonNumber += 1;
+        <br>
+        }
+    </div>
+    }
+</div>
+<div class="col">
+    <h4>A total of @wagonNumber Wagon(s) are needed to Transport all Animals</h4>
+</div>
