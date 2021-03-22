@@ -9,6 +9,7 @@ namespace Logic
 {
     public class AnimalManager
     {
+        //Sets an id for the animal
         public static IAnimal SetId(IAnimal animal)
         {
             try
@@ -21,16 +22,15 @@ namespace Logic
             return animal;
         }
 
+        //Validates whether the model is complete or not
         public static bool ValidateModel(IAnimal animal)
-        {
-            bool isValid = false;
-
+        {         
             if(animal.Name != null && (animal.Diet == 0 || animal.Diet == 1 ) && (animal.Size == 1 || animal.Size == 3 || animal.Size == 5))
             {
-                isValid = true;
+                return true;
             }
 
-            return isValid;
+            else { return false; }
         }
     
     }

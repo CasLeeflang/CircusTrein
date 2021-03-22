@@ -2,6 +2,7 @@
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,10 +39,12 @@ namespace CircusTrein.Controllers
         [HttpPost]
         public IActionResult AddAnimalToList(AnimalView animal)
         {
-            AnimalManager.SetId(animal);
-            if (AnimalManager.ValidateModel(animal))
+            var newAnimal = new Animal(animal.AnimalId, animal.Name, animal.Diet, animal.Size); //Map viewmodel to Model
+
+            AnimalManager.SetId(newAnimal);
+            if (AnimalManager.ValidateModel(newAnimal))
             {
-                Storage.AnimalStorage.AddAnimalToList(animal);
+                Storage.AnimalStorage.AddAnimalToList(newAnimal);
             }
             else { Console.WriteLine("Something went wrong while adding the Animal, Please try again!"); }
 
@@ -55,11 +58,10 @@ namespace CircusTrein.Controllers
             return RedirectToAction("NewTrain");
         }
 
-
         public IActionResult GenerateTrain()
         {
             Logic.WagonManager.ClearWagons();
-            Logic.Sorting.CheckForConstraints(Storage.AnimalStorage.GetAnimalList());
+            Logic.Sorting.CheckForConstraints(Storage.AnimalStorage.GetAnimalList().OrderByDescending(o => o.Size).ToList());
             return View();
         }
 

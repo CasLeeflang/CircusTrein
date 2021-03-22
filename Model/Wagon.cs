@@ -19,18 +19,26 @@ namespace Model
             }
         }
 
-        public bool Used { get; set; } = false;
-
-
-
-        public Wagon()
+        public bool Used
         {
-            Animals = new List<IAnimal>();
-        }
-        public Wagon(IAnimal animal)
-        {
-            Animals = new List<IAnimal> { new Animal(animal) };
+            get
+            {
+                if (Animals.Count() > 0)
+                {
+                    return true;
+                }
+                else { return false; }
+            }
         }
 
+        //Property to check if an animal would fit in the wagon.
+        public bool FitAnimal(IAnimal animal)
+        {
+            if (FreeSpots - animal.Size >= 0)
+            {
+                return true;
+            }
+            else { return false; }
+        }
     }
 }

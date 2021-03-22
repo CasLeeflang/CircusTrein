@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CircusTrein.Models
 {
-    public class AnimalView : IAnimal
+    public class AnimalView
     {
         public int AnimalId { get; set; }
 
@@ -16,24 +16,10 @@ namespace CircusTrein.Models
         public string Name { get; set; }
 
         [Required]
-        public int Diet { get; set; }
+        public int Diet { get; set; } // 0 for herbivore, 1 for carnivore 
 
         [Required]
-        public int Size { get; set; }
-         
-        public bool IsSorted { get; set; } = false;
+        public int Size { get; set; } // 1 for small, 3 for medium, 5 for large        
 
-        public AnimalView()
-        {
-
-        }
-
-        public AnimalView(IAnimal animal)
-        {
-            Name = animal.Name;
-            Diet = animal.Diet;
-            Size = animal.Size;
-            IsSorted = animal.IsSorted;
-        }
     }
 }

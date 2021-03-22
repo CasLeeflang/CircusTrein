@@ -6,8 +6,7 @@ namespace CircusTrein.Models
     {
         List<IAnimal> Animals { get; set; }
         int FreeSpots { get;}
-        bool Used { get; set; }
-
-       
+        bool Used { get;}
+        public bool FitAnimal(IAnimal animal);
     }
 }

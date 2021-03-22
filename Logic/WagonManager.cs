@@ -9,25 +9,20 @@ namespace Logic
 {
     public class WagonManager
     {
+        //Clears the wagons, used when a new train is generated
         public static void ClearWagons()
-        {
-            foreach (var animal in Storage.AnimalStorage.GetAnimalList())
-            {
-                animal.IsSorted = false;
-            }
+        {           
             foreach (var wagon in Storage.WagonStorage.GetWagons())
-            {
-                wagon.Used = false;
+            {                
                 wagon.Animals = new List<IAnimal>();
             }
 
         }
 
+        //Adds animal to a wagon
         public static void AddAnimalToWagon(IAnimal animal, IWagon wagon)
         {
-            wagon.Animals.Add(animal);
-            wagon.Used = true;
-            animal.IsSorted = true;
+            wagon.Animals.Add(animal); 
         }
     }
 }
