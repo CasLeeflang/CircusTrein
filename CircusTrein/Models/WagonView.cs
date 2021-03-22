@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace CircusTrein.Models
 {
-    public class WagonView : IWagon
+    public class WagonView
     {
         public List<IAnimal> Animals { get; set; }
-        public int FreeSpots { get; set; } = 10;
+        public int FreeSpots { get; set; } 
         public bool Used { get; set; } = false; 
         public WagonView()
         {

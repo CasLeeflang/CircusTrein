@@ -38,14 +38,14 @@ namespace CircusTrein.Controllers
         [HttpPost]
         public IActionResult AddAnimalToList(AnimalView animal)
         {
-            try
+            AnimalManager.SetId(animal);
+            if (AnimalManager.ValidateModel(animal))
             {
-                var maxId = Storage.AnimalStorage.GetAnimalList().Max(o => o.AnimalId);
-                animal.AnimalId = maxId + 1;
+                Storage.AnimalStorage.AddAnimalToList(animal);
             }
-            catch { animal.AnimalId = 0; }
+            else { Console.WriteLine("Something went wrong while adding the Animal, Please try again!"); }
 
-            Storage.AnimalStorage.AddAnimalToList(animal);
+            
             return RedirectToAction("NewTrain");
         }
 

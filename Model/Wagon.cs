@@ -10,8 +10,18 @@ namespace Model
     public class Wagon : IWagon
     {
         public List<IAnimal> Animals { get; set; }
-        public int FreeSpots { get; set; } = 10;
-        public bool Used { get; set; } = false; 
+        public int FreeSpots
+        {
+            get
+            {
+                //Rule so the prop is always correct
+                return 10 - Animals.Sum(e => e.Size);
+            }
+        }
+
+        public bool Used { get; set; } = false;
+
+
 
         public Wagon()
         {

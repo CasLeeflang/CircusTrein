@@ -19,7 +19,6 @@ namespace Logic
             {
                 wagon.Used = false;
                 wagon.Animals = new List<IAnimal>();
-                wagon.FreeSpots = 10;
             }
 
         }
@@ -29,7 +28,6 @@ namespace Logic
             wagon.Animals.Add(animal);
             wagon.Used = true;
             animal.IsSorted = true;
-            wagon.FreeSpots -= animal.Size;
         }
     }
 }

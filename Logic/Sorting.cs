@@ -16,8 +16,7 @@ namespace Logic
                 {
                     foreach (var wagon in WagonStorage.GetWagons().OrderBy(o => o.FreeSpots))
                     {
-                        //Check constrain 1
-                        if (Constraint1(animal, wagon) && Constraint2(animal, wagon) && !animal.IsSorted)
+                        if (StorageConstraint(animal, wagon) && DietaryConstraint(animal, wagon) && !animal.IsSorted)
                         {
                             WagonManager.AddAnimalToWagon(animal, wagon);                            
                         }
@@ -26,14 +25,14 @@ namespace Logic
             }
         }
 
-
         //Wagon storage constraint
-        public static bool Constraint1(IAnimal animal, IWagon wagon)
+        public static bool StorageConstraint(IAnimal animal, IWagon wagon)
         {
             if (wagon.Animals != null)
             {                
                 if (wagon.FreeSpots - animal.Size >= 0)
                 {
+                    Console.WriteLine(wagon.FreeSpots);
                     return true;
                 }
 
@@ -43,7 +42,7 @@ namespace Logic
         }
 
         //Animals eating eachother constraint
-        public static bool Constraint2(IAnimal animal, IWagon wagon)
+        public static bool DietaryConstraint(IAnimal animal, IWagon wagon)
         {
             bool Possible = true;
 
