@@ -1,4 +1,5 @@
-﻿using CircusTrein.Models;
+﻿
+using Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Model
         {
             get
             {
+                //Check if the wagon is empty or not
                 if (Animals.Count() > 0)
                 {
                     return true;

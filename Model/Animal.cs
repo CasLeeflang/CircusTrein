@@ -1,11 +1,12 @@
-﻿using CircusTrein.Models;
+﻿
+using Interface;
 using System;
 
 namespace Model
 {
     public class Animal : IAnimal
     {
-        public int AnimalId { get; set; }
+        public int AnimalId { get; private set; } //Set can't be private due to setting of id in the controller
         public string Name { get; private set; }
         public int Diet { get; private set; }
         public int Size { get; private set; }
@@ -15,31 +16,22 @@ namespace Model
         //Can be seen as the instinct of the animal.
         public bool WillEat(IAnimal animal)
         {
-            if (Diet == 0)
-            {
-                return false;
-            }
             if (Diet == 1 && Size >= animal.Size)
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            else{ return false; }            
         }
+
         public bool WillBeEaten(IAnimal animal)
-        {
-            if(animal.Diet == 0)
-            {
-                return false;
-            }
+        {            
             if(animal.Diet == 1 && animal.Size >= Size)
             {
                 return true;
             }
             else { return false; }
         }
+
 
         public Animal(int animalId, string animalName, int animalDiet, int animalSize)
         {

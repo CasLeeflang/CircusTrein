@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CircusTrein.Models
+namespace Interface
 {
     public interface IWagon
     {

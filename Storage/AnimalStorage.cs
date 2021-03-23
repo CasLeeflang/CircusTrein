@@ -1,5 +1,5 @@
-﻿using CircusTrein.Models;
-
+﻿
+using Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace Storage
 {
     public class AnimalStorage
     {  
-        public static List<IAnimal> animals = new List<IAnimal>();        
+        public static List<IAnimal> animals = new List<IAnimal>();
 
         public static List<IAnimal> GetAnimalList()
         {          

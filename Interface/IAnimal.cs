@@ -1,8 +1,8 @@
-﻿namespace CircusTrein.Models
+﻿namespace Interface
 {
     public interface IAnimal
     {
-        int AnimalId { get; set; }
+        int AnimalId { get; }
         int Diet { get;}
         string Name { get;}
         int Size { get;}
