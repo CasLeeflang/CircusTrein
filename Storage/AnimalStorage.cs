@@ -8,9 +8,9 @@ namespace Storage
 {
     public class AnimalStorage
     {  
-        public static List<IAnimal> animals = new List<IAnimal>();
+        private static List<IAnimal> animals { get; set; }
 
-        public static List<IAnimal> GetAnimalList()
+        public static IEnumerable<IAnimal> GetAnimalList()
         {          
             return animals;
         }

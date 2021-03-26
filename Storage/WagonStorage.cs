@@ -12,9 +12,10 @@ namespace Storage
     {
         public static List<IWagon> wagons = new List<IWagon> { new Wagon(), new Wagon(), new Wagon(), new Wagon(), new Wagon(), new Wagon(), new Wagon() };
 
-        public static List<IWagon> GetWagons()
+        public static IEnumerable<IWagon> GetWagons()
         {
             return wagons;
         }
+
     }
 }

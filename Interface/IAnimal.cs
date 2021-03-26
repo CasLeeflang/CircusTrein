@@ -7,6 +7,6 @@
         string Name { get;}
         int Size { get;}
         public bool WillEat(IAnimal animal);
-        public bool WillBeEaten(IAnimal animal);
+        
     }
 }

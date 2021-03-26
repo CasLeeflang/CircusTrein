@@ -12,18 +12,19 @@ namespace Logic
     {
         //Clears the wagons, used when a new train is generated
         public static void ClearWagons()
-        {           
-            foreach (var wagon in Storage.WagonStorage.GetWagons())
-            {                
-                wagon.Animals = new List<IAnimal>();
-            }
+        {    
+            
 
+            foreach (var wagon in Storage.WagonStorage.GetWagons())
+            {
+                wagon.ResetAnimalList();
+            }
         }
 
         //Adds animal to a wagon
         public static void AddAnimalToWagon(IAnimal animal, IWagon wagon)
         {
-            wagon.Animals.Add(animal); 
+            wagon.AddAnimalToWagon(animal);
         }
     }
 }

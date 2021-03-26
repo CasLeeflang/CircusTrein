@@ -22,18 +22,22 @@ namespace Logic
 
                             //Check for all animals already in the wagon whether they will eat the potential new animal and vice versa
                             //If they dont, the animal is passed, else it does not
-                            bool passed = false;
-                            foreach (var animalInWagon in wagon.Animals)
+
+                            bool passed = false; 
+
+                            foreach (var animalInWagon in wagon.GetAnimals())
                             {
-                                if (!animal.WillBeEaten(animalInWagon) && !animal.WillEat(animalInWagon))
+                                Console.WriteLine(wagon.GetAnimals()) ;
+                                if (!animal.WillEat(animalInWagon) && !animalInWagon.WillEat(animal))
                                 {
+                                    Console.WriteLine();
                                     passed = true;
                                 }
                                 else { passed = false;}
                             }
 
                             if (passed)
-                            {
+                            {                                
                                 WagonManager.AddAnimalToWagon(animal, wagon);
                                 break;
                             }

@@ -10,13 +10,13 @@ namespace Model
 {
     public class Wagon : IWagon
     {
-        public List<IAnimal> Animals { get; set; }
+        private List<IAnimal> Animals { get; set; }
         public int FreeSpots
         {
             get
             {
                 //Rule so the prop is always correct
-                return 10 - Animals.Sum(e => e.Size);
+                return 10 - GetAnimals().Sum(e => e.Size);
             }
         }
 
@@ -25,7 +25,7 @@ namespace Model
             get
             {
                 //Check if the wagon is empty or not
-                if (Animals.Count() > 0)
+                if (GetAnimals().Count() > 0)
                 {
                     return true;
                 }
@@ -41,6 +41,21 @@ namespace Model
                 return true;
             }
             else { return false; }
+        }
+
+        public IEnumerable<IAnimal> GetAnimals() // List with IEnumerable
+        {
+            return Animals;
+        }
+
+        public void AddAnimalToWagon(IAnimal animal )
+        {
+            Animals.Add(animal);
+        }
+
+        public void ResetAnimalList()
+        {
+            Animals = new List<IAnimal>();      
         }
     }
 }
