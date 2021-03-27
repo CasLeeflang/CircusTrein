@@ -7,11 +7,11 @@ using System.Linq;
 namespace Storage
 {
     public class AnimalStorage
-    {  
-        private static List<IAnimal> animals { get; set; }
+    {
+        private static List<IAnimal> animals { get; set; } = new List<IAnimal>();      
 
         public static IEnumerable<IAnimal> GetAnimalList()
-        {          
+        {
             return animals;
         }
         public static void AddAnimalToList(IAnimal animal)
@@ -26,4 +26,3 @@ namespace Storage
         }
     }
 }
-    

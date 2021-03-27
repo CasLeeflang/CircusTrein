@@ -10,7 +10,7 @@ namespace Model
 {
     public class Wagon : IWagon
     {
-        private List<IAnimal> Animals { get; set; }
+        private List<IAnimal> Animals { get; set; } = new List<IAnimal>();
         public int FreeSpots
         {
             get
@@ -31,6 +31,14 @@ namespace Model
                 }
                 else { return false; }
             }
+        }
+        public Wagon()
+        {
+
+        }
+        public Wagon(IAnimal animal)
+        {
+            this.AddAnimalToWagon(animal);
         }
 
         //Property to check if an animal would fit in the wagon.
@@ -56,6 +64,6 @@ namespace Model
         public void ResetAnimalList()
         {
             Animals = new List<IAnimal>();      
-        }
+        }       
     }
 }

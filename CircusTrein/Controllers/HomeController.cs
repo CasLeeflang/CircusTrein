@@ -62,7 +62,7 @@ namespace CircusTrein.Controllers
         public IActionResult GenerateTrain()
         {
             Logic.WagonManager.ClearWagons();
-            Logic.Sorting.CheckForConstraints(Storage.AnimalStorage.GetAnimalList().OrderByDescending(o => o.Size).ToList());
+            Logic.Sorting.CheckForConstraints(Logic.AnimalManager.GetAnimals().OrderByDescending(o => o.Size).ToList());
             return View();
         }
 

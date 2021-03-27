@@ -21,6 +21,11 @@ namespace Logic
 
         }
 
+        public static IEnumerable<IAnimal> GetAnimals()
+        {
+            return Storage.AnimalStorage.GetAnimalList();
+        }
+
         //Validates whether the model is complete or not
         public static bool ValidateModel(IAnimal animal)
         {         

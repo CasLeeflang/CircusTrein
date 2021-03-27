@@ -1,5 +1,7 @@
 ﻿
 using Interface;
+using Model;
+using Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +27,18 @@ namespace Logic
         public static void AddAnimalToWagon(IAnimal animal, IWagon wagon)
         {
             wagon.AddAnimalToWagon(animal);
+        }
+
+        public static void CreateWagonWithAnimal(IAnimal animal)
+        {
+            var wagonWithAnimal = new Wagon(animal);
+            WagonStorage.AddWagon(wagonWithAnimal);
+
+        }
+
+        public static IEnumerable<IWagon> GetWagons()
+        {
+            return WagonStorage.GetWagons();
         }
     }
 }
