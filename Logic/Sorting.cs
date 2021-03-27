@@ -1,4 +1,6 @@
-﻿using CircusTrein.Models;
+﻿
+using Interface;
+using Model;
 using Storage;
 using System;
 using System.Collections.Generic;
@@ -8,61 +10,61 @@ namespace Logic
 {
     public class Sorting
     {
+        public static void InitialiseWagons(int length)
+        {
+            WagonStorage.ClearWagons();
+            WagonStorage.CreateWagonList(length);
+        }
+
         public static void CheckForConstraints(List<IAnimal> animals)
         {
+            InitialiseWagons(10);    
+
             foreach (var animal in animals)
             {
-                if (!animal.IsSorted)
+                foreach (var wagon in WagonManager.GetWagons().OrderBy(o => o.FreeSpots))
                 {
-                    foreach (var wagon in WagonStorage.GetWagons().OrderBy(o => o.FreeSpots))
+                    if (wagon.FitAnimal(animal))
                     {
-                        if (StorageConstraint(animal, wagon) && DietaryConstraint(animal, wagon) && !animal.IsSorted)
+                        if (wagon.Used)
                         {
-                            WagonManager.AddAnimalToWagon(animal, wagon);                            
+
+                            //Check for all animals already in the wagon whether they will eat the potential new animal and vice versa
+                            //If they dont, the animal is passed, else it does not
+
+                            bool passed = false;
+
+                            foreach (var animalInWagon in wagon.GetAnimals())
+                            {
+                                Console.WriteLine(wagon.GetAnimals());
+                                if (!animal.WillEat(animalInWagon) && !animalInWagon.WillEat(animal))
+                                {
+                                    Console.WriteLine();
+                                    passed = true;
+                                }
+                                else { passed = false; }
+                            }
+
+                            if (passed)
+                            {
+                                WagonManager.AddAnimalToWagon(animal, wagon);
+                                break;
+                            }
+                        }
+
+                        //If the wagon is empty the animal can be added right away
+                        else
+                        {
+                            WagonManager.AddAnimalToWagon(animal, wagon);
+                            break;
                         }
                     }
+
                 }
+
+                
+
             }
         }
-
-        //Wagon storage constraint
-        public static bool StorageConstraint(IAnimal animal, IWagon wagon)
-        {
-            if (wagon.Animals != null)
-            {                
-                if (wagon.FreeSpots - animal.Size >= 0)
-                {
-                    Console.WriteLine(wagon.FreeSpots);
-                    return true;
-                }
-
-                else { return false; }
-            }
-            else { return true; }
-        }
-
-        //Animals eating eachother constraint
-        public static bool DietaryConstraint(IAnimal animal, IWagon wagon)
-        {
-            bool Possible = true;
-
-            foreach (var animalWagon in wagon.Animals)
-            {
-
-                if (animalWagon.Diet == 1 && animalWagon.Size >= animal.Size)
-                {
-                    Possible = false;
-                }
-
-                if (animal.Diet == 1 && animal.Size >= animalWagon.Size)
-                {
-                    Possible = false;
-                }
-            }
-
-            return Possible;
-        }
-
-
     }
 }

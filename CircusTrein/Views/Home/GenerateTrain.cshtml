@@ -16,7 +16,7 @@
             <h3 style="color:green">Wagon @wagonNumber</h3>
             <h5>Remaining space: @wagon.FreeSpots</h5>
 
-            <h5 class="mt-3" style="border-bottom:3px solid black; width:250px;">@wagon.Animals.Count() Animal(s) in this Wagon:</h5>
+            <h5 class="mt-3" style="border-bottom:3px solid black; width:250px;">@wagon.GetAnimals().Count() Animal(s) in this Wagon:</h5>
 
             <table class="mt-3" style="border-bottom:1px solid black">
                 <tr style="border-bottom:1px solid black">
@@ -25,7 +25,7 @@
                     <th>Diet</th>
                 </tr>
 
-                @foreach (var animal in wagon.Animals)
+                @foreach (var animal in wagon.GetAnimals())
                 {
                     <tr>
                         <td style="padding:10px">@animal.Name</td>

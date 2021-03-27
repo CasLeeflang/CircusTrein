@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 
-namespace CircusTrein.Models
+namespace Interface
 {
     public interface IWagon
     {
-        List<IAnimal> Animals { get; set; }
+        //IEnumerable<IAnimal> Animals { get; set; }
         int FreeSpots { get;}
-        bool Used { get; set; }
-
-       
+        bool Used { get;}
+        public bool FitAnimal(IAnimal animal);
+        public IEnumerable<IAnimal> GetAnimals();
+        public void AddAnimalToWagon(IAnimal animal);
+        public void ResetAnimalList();
     }
 }

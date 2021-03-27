@@ -1,4 +1,7 @@
-﻿using CircusTrein.Models;
+﻿
+using Interface;
+using Model;
+using Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,25 +12,33 @@ namespace Logic
 {
     public class WagonManager
     {
+        //Clears the wagons, used when a new train is generated
         public static void ClearWagons()
-        {
-            foreach (var animal in Storage.AnimalStorage.GetAnimalList())
-            {
-                animal.IsSorted = false;
-            }
+        {    
+            
+
             foreach (var wagon in Storage.WagonStorage.GetWagons())
             {
-                wagon.Used = false;
-                wagon.Animals = new List<IAnimal>();
+                wagon.ResetAnimalList();
             }
+        }
+
+        //Adds animal to a wagon
+        public static void AddAnimalToWagon(IAnimal animal, IWagon wagon)
+        {
+            wagon.AddAnimalToWagon(animal);
+        }
+
+        public static void CreateWagonWithAnimal(IAnimal animal)
+        {
+            var wagonWithAnimal = new Wagon(animal);
+            WagonStorage.AddWagon(wagonWithAnimal);
 
         }
 
-        public static void AddAnimalToWagon(IAnimal animal, IWagon wagon)
+        public static IEnumerable<IWagon> GetWagons()
         {
-            wagon.Animals.Add(animal);
-            wagon.Used = true;
-            animal.IsSorted = true;
+            return WagonStorage.GetWagons();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using CircusTrein.Models;
+﻿using Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +9,32 @@ namespace Logic
 {
     public class AnimalManager
     {
-        public static IAnimal SetId(IAnimal animal)
+        //Sets an id for the animal
+        public static int GetNewId()
         {
             try
             {
-                var maxId = Storage.AnimalStorage.GetAnimalList().Max(o => o.AnimalId);
-                animal.AnimalId = maxId + 1;
+                var maxId = Storage.AnimalStorage.GetAnimalList().Max(o => o.AnimalId) + 1;
+                return maxId;
             }
-            catch { animal.AnimalId = 0; }          
+            catch { return 0; }          
 
-            return animal;
         }
 
-        public static bool ValidateModel(IAnimal animal)
+        public static IEnumerable<IAnimal> GetAnimals()
         {
-            bool isValid = false;
+            return Storage.AnimalStorage.GetAnimalList();
+        }
 
+        //Validates whether the model is complete or not
+        public static bool ValidateModel(IAnimal animal)
+        {         
             if(animal.Name != null && (animal.Diet == 0 || animal.Diet == 1 ) && (animal.Size == 1 || animal.Size == 3 || animal.Size == 5))
             {
-                isValid = true;
+                return true;
             }
 
-            return isValid;
-        }
-    
+            else { return false; }
+        }    
     }
 }

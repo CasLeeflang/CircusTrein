@@ -1,12 +1,12 @@
-﻿namespace CircusTrein.Models
+﻿namespace Interface
 {
     public interface IAnimal
     {
-        int AnimalId { get; set; }
-        int Diet { get; set; }
-        string Name { get; set; }
-        int Size { get; set; }
-        bool IsSorted { get; set; }
-
+        int AnimalId { get; }
+        int Diet { get;}
+        string Name { get;}
+        int Size { get;}
+        public bool WillEat(IAnimal animal);
+        
     }
 }
