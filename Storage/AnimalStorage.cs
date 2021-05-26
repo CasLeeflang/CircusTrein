@@ -1,20 +1,19 @@
-﻿
-using Interface;
+﻿using DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Storage
 {
-    public class AnimalStorage
+    public static class AnimalStorage
     {
-        private static List<IAnimal> animals { get; set; } = new List<IAnimal>();      
+        private static List<AnimalDTO> animals { get; set; } = new List<AnimalDTO>();      
 
-        public static IEnumerable<IAnimal> GetAnimalList()
+        public static IEnumerable<AnimalDTO> GetAnimalList()
         {
             return animals;
         }
-        public static void AddAnimalToList(IAnimal animal)
+        public static void AddAnimalToList(AnimalDTO animal)
         {
             animals.Add(animal);
         }
