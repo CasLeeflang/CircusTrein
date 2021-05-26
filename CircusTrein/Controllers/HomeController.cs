@@ -2,7 +2,7 @@
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Model;
+using Storage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,6 +16,9 @@ namespace CircusTrein.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        AnimalCollection _animalCollection = new();
+        WagonCollection _wagonCollection = new();
+        Sorting _sorting = new();
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -39,12 +42,12 @@ namespace CircusTrein.Controllers
         [HttpPost]
         public IActionResult AddAnimalToList(AnimalView animal)
         {
-            var newAnimal = new Animal(AnimalManager.GetNewId(), animal.Name, animal.Diet, animal.Size); //Map viewmodel to Model
+            var newAnimal = new Animal(animal.Name, animal.Diet, animal.Size); //Map viewmodel to Model
 
-            if (AnimalManager.ValidateModel(newAnimal)) //if the model is valid -> add to the animal list
+            if (_animalCollection.ValidateModel(newAnimal)) //if the model is valid -> add to the animal list
 
             {
-                Storage.AnimalStorage.AddAnimalToList(newAnimal);
+                _animalCollection.AddAnimal(newAnimal);
             }
 
             else { Console.WriteLine("Something went wrong while adding the Animal, Please try again!"); }
@@ -55,14 +58,14 @@ namespace CircusTrein.Controllers
 
         public IActionResult RemoveAnimalFromList(int animalId)
         {
-            Storage.AnimalStorage.RemoveAnimalFromList(animalId);
+            AnimalStorage.RemoveAnimalFromList(animalId);
             return RedirectToAction("NewTrain");
         }
 
         public IActionResult GenerateTrain()
         {
-            Logic.WagonManager.ClearWagons();
-            Logic.Sorting.CheckForConstraints(Logic.AnimalManager.GetAnimals().OrderByDescending(o => o.Size).ToList());
+            _sorting.Sort(_animalCollection.GetAnimals().OrderByDescending(o => o.Size).ToList());
+
             return View();
         }
 

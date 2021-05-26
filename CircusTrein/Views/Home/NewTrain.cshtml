@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "NewTrain";
 }
+@using Logic;
+@{ AnimalCollection _animalCollection = new();}
 
 <h1>Create a New Animal Transport List</h1>
 <h3>Add animals that need to be transported below.</h3>
@@ -44,69 +46,46 @@
         </div>
         <div>
             <h1 style="border-bottom:1px solid rgb(67 67 67 / 0.28);">Animals to be transported</h1>
-            @if (Logic.AnimalManager.GetAnimals() == null || !Logic.AnimalManager.GetAnimals().Any()) // Check to see if the IENurable is empty
+            @if (_animalCollection.GetAnimals() == null || !_animalCollection.GetAnimals().Any()) // Check to see if the IENurable is empty
             {
-                <h3>No Animals added yet!</h3>
+            <h3>No Animals added yet!</h3>
             }
             else
             {
-                <table>
-                    <tr style="border-bottom:1px solid black">
-                        <th>Name</th>
-                        <th>Size</th>
-                        <th>Diet</th>
-                    </tr>
+            <table>
+                <tr style="border-bottom:1px solid black">
+                    <th>Name</th>
+                    <th>Size</th>
+                    <th>Diet</th>
+                </tr>
 
-                    @foreach (var animal in Logic.AnimalManager.GetAnimals())
+                @foreach (var animal in _animalCollection.GetAnimals())
                     {
-                        <tr style="border-bottom:1px solid black">
-                            <td style="padding:10px">@animal.Name</td>
-                            @if (animal.Size == 1)
-                            {
-                                <td style="padding:10px">
-                                    Small
-                                </td>
-                            }
-                            else
-                            {
-                                if (animal.Size == 3)
-                                {
-                                    <td style="padding:10px">
-                                        Medium
-                                    </td>
-                                }
-                                if (animal.Size == 5)
-                                {
-                                    <td style="padding:10px">
-                                        Large
-                                    </td>
-                                }
-                            }
+                <tr style="border-bottom:1px solid black">
+                    <td style="padding:10px">@animal.Name</td>
+                    <td style="padding:10px">
+                        @animal.Size
+                    </td>
 
-                            @if (animal.Diet == 0)
-                            {
-                                <td style="padding:10px">
-                                    Herbivore
-                                </td>
-                            }
-                            else
-                            {
-                                <td style="padding:10px">
-                                    Carnivore
-                                </td>
-                            }
-                            <td>
-                                <input style="transform:scale(0.8);" class="btn btn-primary" type="button" value="Remove" onclick="location.href='@Url.Action("RemoveAnimalFromList", new { animalId = @animal.AnimalId})'" />
-                            </td>
-                        </tr>
+
+                    <td style="padding:10px">
+                        @animal.Diet
+                    </td>
+
+                    <td>
+                        <input style="transform:scale(0.8);" class="btn btn-primary" type="button" value="Remove" onclick="location.href='@Url.Action("RemoveAnimalFromList", new { animalId = @animal.AnimalId})'" />
+                    </td>
+                </tr>
 
                     }
-                </table>
+            </table>
             }
-            <div>
-                <input class="btn btn-primary mt-3" type="button" value="Generate Train" onclick="location.href='@Url.Action("GenerateTrain")'" />
 
-            </div>
+
+            <form method="post" asp-action="GenerateTrain">
+                <input class="btn btn-primary mt-3" type="submit" value="Generate Train" />
+            </form>
+
 
         </div>
     </div>

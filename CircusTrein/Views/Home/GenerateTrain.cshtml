@@ -4,75 +4,52 @@
 @{
 }
 @using Logic;
+@{WagonCollection _wagonCollection = new(); }
 @{int wagonNumber = 0;}
 
 <div style="width:350px;">
-    @foreach (var wagon in Storage.WagonStorage.GetWagons())
+    @foreach (var wagon in _wagonCollection.GetWagons())
     {
-    <div class="mt-5" style="border-radius:10px; background-color:rgb(118 146 255 / 0.35);">
-        @if (wagon.Used)
-        {
-        <div style="padding:5px;">
-            <h3 style="color:green">Wagon @wagonNumber</h3>
-            <h5>Remaining space: @wagon.FreeSpots</h5>
+        <div class="mt-5" style="border-radius:10px; background-color:rgb(118 146 255 / 0.35);">
+            @if (wagon.Used)
+            {
+                <div style="padding:5px;">
+                    <h3 style="color:green">Wagon @wagonNumber</h3>
+                    <h5>Remaining space: @wagon.FreeSpots</h5>
 
-            <h5 class="mt-3" style="border-bottom:3px solid black; width:250px;">@wagon.GetAnimals().Count() Animal(s) in this Wagon:</h5>
+                    <h5 class="mt-3" style="border-bottom:3px solid black; width:250px;">@wagon.GetAnimals().Count() Animal(s) in this Wagon:</h5>
 
-            <table class="mt-3" style="border-bottom:1px solid black">
-                <tr style="border-bottom:1px solid black">
-                    <th>Name</th>
-                    <th>Size</th>
-                    <th>Diet</th>
-                </tr>
+                    <table class="mt-3" style="border-bottom:1px solid black">
+                        <tr style="border-bottom:1px solid black">
+                            <th>Name</th>
+                            <th>Size</th>
+                            <th>Diet</th>
+                        </tr>
 
-                @foreach (var animal in wagon.GetAnimals())
-                {
-                    <tr>
-                        <td style="padding:10px">@animal.Name</td>
-                        @if (animal.Size == 1)
+                        @foreach (var animal in wagon.GetAnimals())
                         {
-                            <td style="padding:10px">
-                                Small
-                            </td>
-                        }
-                        else
-                        {
-                            if (animal.Size == 3)
-                            {
+                            <tr>
+                                <td style="padding:10px">@animal.Name</td>
                                 <td style="padding:10px">
-                                    Medium
+                                    @animal.Size
                                 </td>
-                            }
-                            if (animal.Size == 5)
-                            {
+
+
+
                                 <td style="padding:10px">
-                                    Large
+                                    @animal.Diet
                                 </td>
-                            }
-                        }
 
-                        @if (animal.Diet == 0)
-                        {
-                            <td style="padding:10px">
-                                Herbivore
-                            </td>
-                        }
-                        else
-                        {
-                            <td style="padding:10px">
-                                Carnivore
-                            </td>
-                        }
 
-                    </tr>
+                            </tr>
 
-                }
-            </table>
+                        }
+                    </table>
+                </div>
+                wagonNumber += 1;
+                <br>
+            }
         </div>
-        wagonNumber += 1;
-        <br>
-        }
-    </div>
     }
 </div>
 <div class="col">

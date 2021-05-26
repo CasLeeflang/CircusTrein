@@ -1,36 +1,37 @@
-﻿using System;
+﻿using DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Model;
-using Interface;
 
 namespace Storage
 {
-    public class WagonStorage
+    public static class WagonStorage
     {
-        private static List<IWagon> wagons { get; set; } = new List<IWagon>();
-        public static IEnumerable<IWagon> GetWagons()
+        private static List<WagonDTO> wagons { get; set; } = new List<WagonDTO>();
+        public static IEnumerable<WagonDTO> GetWagons()
         {
             return wagons;
         }
 
         public static void CreateWagonList(int length)
         {
+            ClearWagons();
             for (int i = 0; i <= length; i++)
             {
-                wagons.Add(new Wagon());
+                wagons.Add(new WagonDTO());
             }            
         }
 
-        public static void AddWagon(IWagon wagon)
+        public static void AddWagon(WagonDTO wagon)
         {
             wagons.Add(wagon);
         }
+
         public static void ClearWagons()
         {
-            wagons = new List<IWagon>();
+            wagons = new List<WagonDTO>();
         }
     }
 }
