@@ -14,11 +14,11 @@ namespace Logic.Tests
     public class AnimalTests
     {
         [TestMethod()]
-        public void WillEatTest()
+        public void CarnWillEatHerbTest()
         {
             // Arrange
-            Animal firstAnimal = new Animal("Bob", Diet.Carnivore, Size.Large);
-            Animal secondAnimal = new Animal("Anne", Diet.Herbivore, Size.Small);
+            Animal firstAnimal = new Animal(0, "Bob", Diet.Carnivore, Size.Large);
+            Animal secondAnimal = new Animal(0, "Anne", Diet.Herbivore, Size.Large);
 
 
             // Act

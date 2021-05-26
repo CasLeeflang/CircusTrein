@@ -19,6 +19,7 @@ namespace CircusTrein.Controllers
         AnimalCollection _animalCollection = new();
         WagonCollection _wagonCollection = new();
         Sorting _sorting = new();
+       
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -42,7 +43,7 @@ namespace CircusTrein.Controllers
         [HttpPost]
         public IActionResult AddAnimalToList(AnimalView animal)
         {
-            var newAnimal = new Animal(animal.Name, animal.Diet, animal.Size); //Map viewmodel to Model
+            var newAnimal = new Animal(_animalCollection.GetMaxAnimalId() + 1, animal.Name, animal.Diet, animal.Size); //Map viewmodel to Model
 
             if (_animalCollection.ValidateModel(newAnimal)) //if the model is valid -> add to the animal list
 
@@ -58,13 +59,13 @@ namespace CircusTrein.Controllers
 
         public IActionResult RemoveAnimalFromList(int animalId)
         {
-            AnimalStorage.RemoveAnimalFromList(animalId);
+            _animalCollection.DeleteAnimal(animalId);
             return RedirectToAction("NewTrain");
         }
 
         public IActionResult GenerateTrain()
         {
-            _sorting.Sort(_animalCollection.GetAnimals().OrderByDescending(o => o.Size).ToList());
+            _sorting.Sort(_animalCollection.GetAnimals().OrderByDescending(o => o.Diet).ThenByDescending(o => o.Size));
 
             return View();
         }

@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using ContractLayer;
+using DAL;
 using DTOs;
 using Storage;
 using System;
@@ -6,17 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Factory;
 
 namespace Logic
 {
     public class AnimalCollection
     {
-        private List<Animal> animals { get; } = new List<Animal>(); 
-
-        AnimalDAL _animalDAL = new();
+        private List<Animal> animals { get; } = new List<Animal>();
+        IAnimalCollectionDAL _animalCollectionDAL = AnimalFactoryDAL.CreateAnimalCollectionDAL();
 
         public void AddAnimal(Animal animal)
         {
+
             AnimalDTO animalDTO = new AnimalDTO
             {
                 AnimalId = animal.AnimalId,
@@ -25,13 +27,13 @@ namespace Logic
                 Size = animal.Size
             };
 
-            _animalDAL.CreateAnimal(animalDTO);
+            _animalCollectionDAL.CreateAnimal(animalDTO);
         }
 
         public IEnumerable<Animal> GetAnimals()
         {
             animals.Clear();
-            var animalDTOs = _animalDAL.GetAllAnimals();
+            var animalDTOs = _animalCollectionDAL.GetAllAnimals();
             foreach (var animalDTO in animalDTOs)
             {
                 Animal animal = new Animal(animalDTO);
@@ -50,5 +52,13 @@ namespace Logic
 
             else { return false; }
         }    
+        public int GetMaxAnimalId()
+        {
+            return _animalCollectionDAL.GetMaxAnimalId();
+        }
+        public void DeleteAnimal(int animalId)
+        {
+            _animalCollectionDAL.DeleteAnimal(animalId);
+        }
     }
 }
