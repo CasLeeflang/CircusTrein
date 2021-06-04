@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using ContractLayer;
+using DAL;
 using DTOs;
 using Storage;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Factory;
 
 namespace Logic
 {
@@ -14,21 +16,14 @@ namespace Logic
         private List<Wagon> Wagons { get; } = new List<Wagon>();
 
         WagonDAL _wagonDAL = new();
+        IWagonCollectionDAL _wagonCollectionDAL = WagonFactoryDAL.CreateWagonCollectionDAL();
 
-        public void Initialise(int length)
-        {
-            for (int i = 0; i <= length; i++)
-            {
-                Wagons.Add(new Wagon());
-            }
-            _wagonDAL.InitializeWagons(length);
-        }
 
         //Clears the wagons, used when a new train is generated
         public void ClearWagons()
         {
             Wagons.Clear();
-            _wagonDAL.ClearWagons();
+            _wagonCollectionDAL.ClearWagons();
         }
 
         public void AddWagon(Animal animal)
@@ -70,7 +65,7 @@ namespace Logic
                     };
                     wagonDTO.AddAnimal(animalDTO);
                 }
-                _wagonDAL.AddWagon(wagonDTO);
+                _wagonCollectionDAL.AddWagon(wagonDTO);
             }
             Wagons.Clear();
         }

@@ -9,7 +9,7 @@ namespace Logic
 {
     public class Wagon
     {
-        private List<Animal> Animals { get; set; } = new List<Animal>();
+        private List<Animal> Animals { get; } = new List<Animal>();
         public int FreeSpots
         {
             get
@@ -34,6 +34,7 @@ namespace Logic
                 }
             }
         }
+
         public Wagon()
         {
 
@@ -47,18 +48,11 @@ namespace Logic
                 Animals.Add(animal);
             }
         }
+
         public bool AddAnimalToWagon(Animal animal)
         {
-            if (FitAnimal(animal))
+            if (FitAnimal(animal) && CompatibleAnimals(animal))
             {
-                foreach (var _animal in Animals)
-                {
-                    if (_animal.WillEat(animal) || animal.WillEat(_animal))
-                    {
-                        return false;
-                    }
-                }
-
                 Animals.Add(animal);
                 return true;
             }
@@ -68,8 +62,28 @@ namespace Logic
             }
         }
 
+        
+
+        private bool CompatibleAnimals(Animal animal)
+        {
+
+            foreach (var _animal in Animals)
+            {
+                if (_animal.WillEat(animal) || animal.WillEat(_animal))
+                {
+                    return false;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return true;
+        }
+
         //Property to check if an animal would fit in the wagon.
-        public bool FitAnimal(Animal animal)
+        private bool FitAnimal(Animal animal)
         {
             if (FreeSpots - Convert.ToInt32(animal.Size) >= 0)
             {
@@ -84,14 +98,6 @@ namespace Logic
         public IEnumerable<Animal> GetAnimals() // List with IEnumerable
         {
             return Animals;
-        }
-
-
-
-
-        public void ResetAnimalList()
-        {
-            Animals = new List<Animal>();
         }
     }
 }

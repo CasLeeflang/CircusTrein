@@ -1,4 +1,5 @@
-﻿using DTOs;
+﻿using ContractLayer;
+using DTOs;
 using Storage;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,9 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class WagonDAL
+    public class WagonDAL : IWagonCollectionDAL
     {
-        public void InitializeWagons(int length)
-        {
-            WagonStorage.CreateWagonList(length);
-        }
+
         public void ClearWagons()
         {
             WagonStorage.ClearWagons();

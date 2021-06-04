@@ -9,12 +9,12 @@ namespace Logic
     {
         WagonCollection _wagonCollection = new();
 
-        public void Sort(List<Animal> animals)
+        public IEnumerable<Wagon> Sort(IEnumerable<Animal> animals)
         {
-            _wagonCollection.Initialise(0);
+            _wagonCollection.ClearWagons();
 
 
-            foreach (var animal in animals)
+            foreach (var animal in animals.OrderByDescending(o => o.Diet).ThenByDescending(o => o.Size))
             {
                 bool allocated = false;
 
@@ -25,66 +25,19 @@ namespace Logic
                         allocated = true;
                         break;
                     }
-
                 }
+
                 if (allocated == false)
                 {
                     _wagonCollection.AddWagon(animal);  //  Animal fits but not compatible
                 }
+
             }        
 
+
             _wagonCollection.SaveWagons();
+
+            return _wagonCollection.GetWagons();
         }
     }
 }
-
-
-
-
-
-//if (wagon.FitAnimal(animal))
-//{
-//    if (wagon.Used)
-//    {
-
-//        //Check for all animals already in the wagon whether they will eat the potential new animal and vice versa
-//        //If they dont, the animal is passed, else it does not
-
-//        bool passed = false;
-
-//        foreach (var animalInWagon in wagon.GetAnimals())
-//        {
-//            if (!animal.WillEat(animalInWagon) && !animalInWagon.WillEat(animal))
-//            {
-//                passed = true;
-//            }
-//            else
-//            {
-//                passed = false;
-//            }
-//        }
-
-//        if (passed)
-//        {
-//            wagon.AddAnimalToWagon(animal);
-//            break;
-//        }
-//        else
-//        {
-//            _wagonCollection.AddWagon(animal);  //  Animal fits but not compatible
-//            break;
-//        }
-//    }
-
-//    //If the wagon is empty the animal can be added right away
-//    else
-//    {
-//        wagon.AddAnimalToWagon(animal);
-//        break;
-//    }
-//}
-//else
-//{
-//    _wagonCollection.AddWagon(animal);  //  Animal does not fit
-//    break;
-//}

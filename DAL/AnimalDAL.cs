@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using ContractLayer;
+using Dapper;
 using DTOs;
 using Storage;
 using System;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    public class AnimalDAL
+    public class AnimalDAL : IAnimalCollectionDAL
     {
         public void CreateAnimal(AnimalDTO animalDTO)
         {
@@ -18,6 +19,14 @@ namespace DAL
         public IEnumerable<AnimalDTO> GetAllAnimals()
         {
             return AnimalStorage.GetAnimalList();
+        }
+        public void DeleteAnimal(int animalId)
+        {
+            AnimalStorage.DeleteAnimal(animalId);
+        }
+        public int GetMaxAnimalId()
+        {
+            return AnimalStorage.GetMaxId();
         }
     }
 

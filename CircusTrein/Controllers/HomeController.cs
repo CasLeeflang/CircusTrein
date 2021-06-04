@@ -19,6 +19,7 @@ namespace CircusTrein.Controllers
         AnimalCollection _animalCollection = new();
         WagonCollection _wagonCollection = new();
         Sorting _sorting = new();
+       
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -44,10 +45,10 @@ namespace CircusTrein.Controllers
         {
             var newAnimal = new Animal(animal.Name, animal.Diet, animal.Size); //Map viewmodel to Model
 
-            if (_animalCollection.ValidateModel(newAnimal)) //if the model is valid -> add to the animal list
+            if (_animalCollection.AddAnimal(newAnimal)) //if the model is valid -> add to the animal list
 
             {
-                _animalCollection.AddAnimal(newAnimal);
+                Console.WriteLine("Animal Added to List!");
             }
 
             else { Console.WriteLine("Something went wrong while adding the Animal, Please try again!"); }
@@ -58,15 +59,13 @@ namespace CircusTrein.Controllers
 
         public IActionResult RemoveAnimalFromList(int animalId)
         {
-            AnimalStorage.RemoveAnimalFromList(animalId);
+            _animalCollection.DeleteAnimal(animalId);
             return RedirectToAction("NewTrain");
         }
 
         public IActionResult GenerateTrain()
-        {
-            _sorting.Sort(_animalCollection.GetAnimals().OrderByDescending(o => o.Size).ToList());
-
-            return View();
+        {            
+            return View(_sorting.Sort(_animalCollection.GetAnimals()));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
