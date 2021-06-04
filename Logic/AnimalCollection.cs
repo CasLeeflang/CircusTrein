@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Factory;
+using Variables;
 
 namespace Logic
 {
@@ -16,18 +17,25 @@ namespace Logic
         private List<Animal> animals { get; } = new List<Animal>();
         IAnimalCollectionDAL _animalCollectionDAL = AnimalFactoryDAL.CreateAnimalCollectionDAL();
 
-        public void AddAnimal(Animal animal)
-        {
-
-            AnimalDTO animalDTO = new AnimalDTO
+        public bool AddAnimal(Animal animal)
+        {            
+            if (ValidateModel(animal))
             {
-                AnimalId = animal.AnimalId,
-                Name = animal.Name,
-                Diet = animal.Diet,
-                Size = animal.Size
-            };
+                AnimalDTO animalDTO = new AnimalDTO
+                {
+                    AnimalId = GetNewMaxAnimalId(),
+                    Name = animal.Name,
+                    Diet = animal.Diet,
+                    Size = animal.Size
+                };
 
-            _animalCollectionDAL.CreateAnimal(animalDTO);
+                _animalCollectionDAL.CreateAnimal(animalDTO);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public IEnumerable<Animal> GetAnimals()
@@ -43,19 +51,22 @@ namespace Logic
         }
 
         //Validates whether the model is complete or not
-        public bool ValidateModel(Animal animal)
-        {         
-            if(animal.Name != null && (animal.Diet == 0 || Convert.ToInt32(animal.Diet) == 1 ) && (Convert.ToInt32(animal.Size) == 1 || Convert.ToInt32(animal.Size) == 3 || Convert.ToInt32(animal.Size) == 5))
+        private bool ValidateModel(Animal animal)
+        {
+            if (animal.Name != null && (animal.Diet == 0 || Convert.ToInt32(animal.Diet) == 1) && (Convert.ToInt32(animal.Size) == 1 || Convert.ToInt32(animal.Size) == 3 || Convert.ToInt32(animal.Size) == 5))
             {
+
                 return true;
             }
 
             else { return false; }
-        }    
-        public int GetMaxAnimalId()
-        {
-            return _animalCollectionDAL.GetMaxAnimalId();
         }
+
+        private int GetNewMaxAnimalId()
+        {
+            return _animalCollectionDAL.GetMaxAnimalId() + 1;
+        }
+
         public void DeleteAnimal(int animalId)
         {
             _animalCollectionDAL.DeleteAnimal(animalId);

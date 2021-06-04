@@ -11,10 +11,7 @@ namespace DAL
 {
     public class WagonDAL : IWagonCollectionDAL
     {
-        public void InitializeWagons(int length)
-        {
-            WagonStorage.CreateWagonList(length);
-        }
+
         public void ClearWagons()
         {
             WagonStorage.ClearWagons();

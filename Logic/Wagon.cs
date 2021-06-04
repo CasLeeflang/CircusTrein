@@ -9,7 +9,7 @@ namespace Logic
 {
     public class Wagon
     {
-        private List<Animal> Animals { get; set; } = new List<Animal>();
+        private List<Animal> Animals { get; } = new List<Animal>();
         public int FreeSpots
         {
             get
@@ -61,6 +61,8 @@ namespace Logic
                 return false;
             }
         }
+
+        
 
         private bool CompatibleAnimals(Animal animal)
         {

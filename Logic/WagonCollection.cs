@@ -18,14 +18,6 @@ namespace Logic
         WagonDAL _wagonDAL = new();
         IWagonCollectionDAL _wagonCollectionDAL = WagonFactoryDAL.CreateWagonCollectionDAL();
 
-        public void Initialise(int length)
-        {
-            for (int i = 0; i <= length; i++)
-            {
-                Wagons.Add(new Wagon());
-            }
-            _wagonCollectionDAL.InitializeWagons(length);
-        }
 
         //Clears the wagons, used when a new train is generated
         public void ClearWagons()

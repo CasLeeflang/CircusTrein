@@ -43,12 +43,12 @@ namespace CircusTrein.Controllers
         [HttpPost]
         public IActionResult AddAnimalToList(AnimalView animal)
         {
-            var newAnimal = new Animal(_animalCollection.GetMaxAnimalId() + 1, animal.Name, animal.Diet, animal.Size); //Map viewmodel to Model
+            var newAnimal = new Animal(animal.Name, animal.Diet, animal.Size); //Map viewmodel to Model
 
-            if (_animalCollection.ValidateModel(newAnimal)) //if the model is valid -> add to the animal list
+            if (_animalCollection.AddAnimal(newAnimal)) //if the model is valid -> add to the animal list
 
             {
-                _animalCollection.AddAnimal(newAnimal);
+                Console.WriteLine("Animal Added to List!");
             }
 
             else { Console.WriteLine("Something went wrong while adding the Animal, Please try again!"); }
@@ -64,10 +64,8 @@ namespace CircusTrein.Controllers
         }
 
         public IActionResult GenerateTrain()
-        {
-            _sorting.Sort(_animalCollection.GetAnimals().OrderByDescending(o => o.Diet).ThenByDescending(o => o.Size));
-
-            return View();
+        {            
+            return View(_sorting.Sort(_animalCollection.GetAnimals()));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

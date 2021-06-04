@@ -9,12 +9,12 @@ namespace Logic
     {
         WagonCollection _wagonCollection = new();
 
-        public void Sort(IEnumerable<Animal> animals)
+        public IEnumerable<Wagon> Sort(IEnumerable<Animal> animals)
         {
-            _wagonCollection.Initialise(0);
+            _wagonCollection.ClearWagons();
 
 
-            foreach (var animal in animals)
+            foreach (var animal in animals.OrderByDescending(o => o.Diet).ThenByDescending(o => o.Size))
             {
                 bool allocated = false;
 
@@ -31,9 +31,11 @@ namespace Logic
                 {
                     _wagonCollection.AddWagon(animal);  //  Animal fits but not compatible
                 }
-            }            
+            }
 
             _wagonCollection.SaveWagons();
+
+            return _wagonCollection.GetWagons();
         }
     }
 }
