@@ -14,7 +14,7 @@ namespace Logic.Tests
     public class AnimalTests
     {
         [TestMethod()]
-        public void LCarnWillEatLHerbTest()
+        public void WillEat_LargeCarnEatsLargeHerb_True()
         {
             // Arrange
             Animal lCarn = new Animal(0, "Bob", Diet.Carnivore, Size.Large);
@@ -30,7 +30,7 @@ namespace Logic.Tests
         }
 
         [TestMethod()]
-        public void SCWillNOTEatLH()
+        public void WillEat_SmallCarnLargeHerb_False()
         {
             Animal sCarn = new Animal(0, "", Diet.Carnivore, Size.Small);
             Animal lHerb = new Animal(0, "", Diet.Herbivore, Size.Large);
@@ -39,7 +39,7 @@ namespace Logic.Tests
         }
 
         [TestMethod()]
-        public void MCWillEatMH()
+        public void WilLEat_MediumCarnMediumHerb_True()
         {
             Animal MC = new Animal(0, "", Diet.Carnivore, Size.Medium);
             Animal MH = new Animal(0, "", Diet.Herbivore, Size.Medium);

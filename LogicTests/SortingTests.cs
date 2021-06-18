@@ -15,13 +15,19 @@ namespace Logic.Tests
 
         Sorting _sorting = new();
 
+        //=====================================================================//
+        //                                                                     //
+        // H1 = Small Herbivore, H5 = Large Herbivore, C5 = Large Carnivore... //
+        //                                                                     //
+        //=====================================================================//
+
         [TestMethod()]
         public void Sort_5H1_3H3_1H5_Expect_2Wagons()
         {
             //  Arrange
             List<Animal> animals = new List<Animal>();
 
-            // H1 = Small Herbivore, H5 = Large Herbivore, C5 = Large Carnivore...etc
+            
             Animal H1 = new Animal(0, "", Diet.Herbivore, Size.Small);
             Animal H3 = new Animal(0, "", Diet.Herbivore, Size.Medium);
             Animal H5 = new Animal(0, "", Diet.Herbivore, Size.Large);
