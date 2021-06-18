@@ -18,7 +18,7 @@ namespace Logic
             {
                 bool allocated = false;
 
-                foreach (var wagon in _wagonCollection.GetCollectionWagons().OrderBy(o => Convert.ToInt32(o.FreeSpots)))
+                foreach (var wagon in _wagonCollection.GetCollectionWagons().OrderBy(o => o.FreeSpots))
                 {
                     if (wagon.AddAnimalToWagon(animal))
                     {
@@ -31,7 +31,9 @@ namespace Logic
                 {
                     _wagonCollection.AddWagon(animal);  //  Animal fits but not compatible
                 }
-            }
+
+            }        
+
 
             _wagonCollection.SaveWagons();
 
